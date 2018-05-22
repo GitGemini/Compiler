@@ -5,155 +5,198 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-/**  
- * 1 »ù±¾×Ö  
- * 2 ±êÊ¶·û   
- * 3 ³£Êý    
- * 4 Ëã·û  
- * 5 ½ç·û  
- */  
+/**
+ * 1 åŸºæœ¬å­— 2 æ ‡è¯†ç¬¦ 3 å¸¸æ•° 4 ç®—ç¬¦ 5 ç•Œç¬¦
+ */
 
 public class WordCompiler {
-	private static String filename = "test.txt";	
-	
-	public int ch;  
-    public int code;//±£Áô×Ö×´Ì¬Âë  
-      
-    public StringBuffer strToken = new StringBuffer();//´æ·Å¹¹³Éµ¥´Ê·ûºÅµÄ×Ö·û´®  
-      
-    public String [] retainWord = new String[]{"int","if","else","return","main","void","while","break"};//±£Áô×Ö  
-      
-    //ÅÐ¶ÏÊÇ·ñÊÇ×ÖÄ¸  
-    public boolean IsLetter(){  
-        if((ch>=65 && ch <= 90) || (ch >= 97 && ch <=122)){  
-            return true;  
-        }  
-        return false;  
-    }  
-      
-    //ÅÐ¶ÏÊÇ·ñÊÇÊý×Ö  
-    public boolean IsDigit(){  
-        if(ch>=48 && ch <= 57){  
-            return true;  
-        }  
-        return false;  
-    }  
-      
-    //ÅÐ¶ÏÊÇ·ñÊÇ¿Õ¸ñ  
-    public boolean IsBC(int ch){  
-        if(ch == 32){  
-            return true;  
-        }  
-        return false;  
-    }  
-      
-    //Á¬½Ó×Ö·û  
-    public void Concat(char ch){  
-        strToken.append(ch);  
-    }  
-      
-    //ÅÐ¶ÏÊÇ·ñÊÇ±£Áô×Ö  
-    public int Reserve(){  
-        for(int i = 0;i < retainWord.length;i++){  
-            if(strToken.toString().equals(retainWord[i])){  
-                return 1;  
-            }  
-        }  
-        if(strToken.length() != 0){  
-            if(strToken.charAt(0)>='0' && strToken.charAt(0)<='9'){  
-                return 3;  
-            }  
-        }  
-          
-        return 2;  
-    }  
-      
-    //  
-    public void Retract(){  
-        code = Reserve();  
-        if(code == 1){  
-            System.out.println("('"+1+"','"+strToken+"')");  
-        }else if(code == 2){  
-            System.out.println("('"+2+"','"+strToken+"')");  
-        }else if(code == 3){  
-            System.out.println("('"+3+"','"+strToken+"')");  
-        }  
-        strToken.delete(0, strToken.length());  
-    }  
-      
-    /**  
-     * ¶ÁÈ¡ÎÄ¼þ  
-     */  
-    public void scanner(){  
-        BufferedReader br;  
-        try {  
-            br = new BufferedReader(new FileReader(filename));  
-            while((ch = br.read()) != -1){  
-                //System.out.println("======="+(char)ch);  
-                if(IsBC(ch) == false){  
-                    if(IsLetter()){  
-                        if(IsLetter() == true || IsDigit() == true){  
-                            Concat((char) ch);  
-                        }  
-                    }else if(IsDigit() == true){  
-                        Concat((char)ch);  
-                    }else if(IsDigit()){  
-                        Concat((char) ch);  
-                    }else if(ch == 61){  
-                        if((strToken.length() != 0 )&& (strToken.charAt(0) == '=')){  
-                            strToken.append((char)ch);  
-                            System.out.println("('"+4+"','"+strToken+"')");  
-                            strToken.delete(0, strToken.length());  
-                        }else{  
-                            strToken.append((char)ch);  
-                        }  
-                    }else if(ch == 43){  
-                        Retract();  
-                        System.out.println("('"+4+"','"+(char) ch+"')");  
-                    }else if(ch == 45){  
-                        Retract();  
-                        System.out.println("('"+4+"','"+(char) ch+"')");  
-                    }else if(ch == 42){  
-                        Retract();  
-                        System.out.println("('"+4+"','"+(char) ch+"')");  
-                    }else if(ch == 47){  
-                        Retract();  
-                        System.out.println("('"+4+"','"+(char) ch+"')");  
-                    }else if((char) ch == ';'){  
-                        Retract();  
-                        System.out.println("('"+5+"','"+(char) ch+"')");  
-                    }else if((char) ch == '('){  
-                        Retract();  
-                        System.out.println("('"+5+"','"+(char) ch+"')");  
-                    }else if((char) ch == ')'){  
-                        Retract();  
-                        System.out.println("('"+5+"','"+(char) ch+"')");  
-                    }else if((char) ch == '{'){  
-                        Retract();  
-                        System.out.println("('"+5+"','"+(char) ch+"')");  
-                    }else if((char) ch == '}'){  
-                        Retract();  
-                        System.out.println("('"+5+"','"+(char) ch+"')");  
-                    }else if((char) ch == ','){  
-                        Retract();  
-                        System.out.println("('"+5+"','"+(char) ch+"')");  
-                    }  
-                      
-                }else{  
-                    Retract();  
-                } 
-                  
-            }  
-        } catch (FileNotFoundException e1) {  
-            e1.printStackTrace();  
-        } catch (IOException e) {   
-            e.printStackTrace();  
-        }  
-    }  
-      
-    public static void main(String[] args) {  
-        WordCompiler compiler = new WordCompiler();  
-        compiler.scanner();  
-    }  
+	private static String filename = "DEMO.PL0";
+
+	public int ch;
+	public int code;// ä¿ç•™å­—çŠ¶æ€ç 
+
+	public StringBuffer strToken = new StringBuffer();// å­˜æ”¾æž„æˆå•è¯ç¬¦å·çš„å­—ç¬¦ä¸²
+
+	public String[] retainWord = new String[] {"begin", "end", "if", "then", "while", "do", "const", "var", "call", "procedure", "odd"};// ä¿ç•™å­—
+
+	// åˆ¤æ–­æ˜¯å¦æ˜¯å­—æ¯
+	public boolean IsLetter() {
+		if ((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122)) {
+			return true;
+		}
+		return false;
+	}
+
+	// åˆ¤æ–­æ˜¯å¦æ˜¯æ•°å­—
+	public boolean IsDigit() {
+		if (ch >= 48 && ch <= 57) {
+			return true;
+		}
+		return false;
+	}
+
+	// åˆ¤æ–­æ˜¯å¦æ˜¯ç©ºæ ¼
+	public boolean IsBC(int ch) {
+		if (ch == 32 || ch == '\t' || ch == '\n') {
+			return true;
+		}
+		return false;
+	}
+
+	// è¿žæŽ¥å­—ç¬¦
+	public void Concat(char ch) {
+		strToken.append(ch);
+	}
+
+	// åˆ¤æ–­æ˜¯å¦æ˜¯ä¿ç•™å­—
+	public int Reserve() {
+		for (int i = 0; i < retainWord.length; i++) {
+			if (strToken.toString().equals(retainWord[i])) {
+				return 1;
+			}
+		}
+		if (strToken.length() != 0) {
+			if (strToken.charAt(0) >= '0' && strToken.charAt(0) <= '9') {
+				return 3;
+			}
+		}else {
+			return -1;
+		}
+		return 2;
+	}
+
+	// é¢„å¤„ç†
+	public void PreDeal(char ch) {
+		
+	}
+
+	//
+	public void Retract() {
+		code = Reserve();
+		if (code == 1) {
+			System.out.println("('" + 1 + "','" + strToken + "')");
+		} else if (code == 2) {
+			System.out.println("('" + 2 + "','" + strToken + "')");
+		} else if (code == 3) {
+			System.out.println("('" + 3 + "','" + strToken + "')");
+		}
+		strToken.delete(0, strToken.length());
+	}
+
+	/**
+	 * è¯»å–æ–‡ä»¶
+	 */
+	public void scanner() {
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader(filename));
+			while ((ch = br.read()) != -1) {
+				// System.out.println("======="+(char)ch);								
+				if (IsBC(ch) == false) {
+					if (IsLetter()) {
+						if (IsLetter() == true || IsDigit() == true) {
+							Concat((char) ch);
+						}
+					} else if (IsDigit() == true) {
+						Concat((char) ch);
+					} else if (IsDigit()) {
+						Concat((char) ch);
+					} else if (ch == '=') {
+						if ((strToken.length() != 0) && (strToken.charAt(0) == '=')) {
+							strToken.append((char) ch);
+							System.out.println("('" + 4 + "','" + strToken + "')");
+							strToken.delete(0, strToken.length());
+						} else {
+							strToken.append((char) ch);
+						}
+					} else if (ch == '+') { //43
+						Retract();
+						System.out.println("('" + 4 + "','" + (char) ch + "')");
+					} else if (ch == '-') { //45
+						Retract();
+						System.out.println("('" + 4 + "','" + (char) ch + "')");
+					} else if (ch == '*') { //42
+						Retract();
+						System.out.println("('" + 4 + "','" + (char) ch + "')");
+					} else if (ch == '/') { //47
+						ch = br.read();
+						if(ch=='/') {//å•è¡Œæ³¨é‡Š
+							while(ch!='\n' && (ch = br.read())!=-1) {
+								ch = br.read();
+							}
+						} else {
+							Retract();
+							System.out.println("('" + 4 + "','" + (char) ch + "')");
+							strToken.append(ch);
+						}
+					} else if ((char) ch == ';') {
+						Retract();
+						System.out.println("('" + 5 + "','" + (char) ch + "')");
+					} else if ((char) ch == '(') {
+						ch = br.read();
+						 if(ch=='*') { //å¤šè¡Œæ³¨é‡Š
+							while((ch = br.read())!=-1) {
+								if(ch=='*') {
+									ch = br.read();
+									if(ch==')') {
+										break;
+									}
+								}
+							}
+						}else {
+							Retract();
+							System.out.println("('" + 5 + "','" + (char) ch + "')");
+							strToken.append(ch);
+						}						
+					} else if ((char) ch == ')') {
+						Retract();
+						System.out.println("('" + 5 + "','" + (char) ch + "')");
+					} else if ((char) ch == '{') {
+						Retract();
+						System.out.println("('" + 5 + "','" + (char) ch + "')");
+					} else if ((char) ch == '}') {
+						Retract();
+						System.out.println("('" + 5 + "','" + (char) ch + "')");
+					} else if ((char) ch == ',') {
+						Retract();
+						System.out.println("('" + 5 + "','" + (char) ch + "')");
+					}else if ((char) ch == '.') {
+						Retract();
+						System.out.println("('" + 5 + "','" + (char) ch + "')");
+					}else if ((char) ch == '<') {
+						Retract();
+						System.out.println("('" + 5 + "','" + (char) ch + "')");
+					}else if ((char) ch == '>') {
+						Retract();
+						System.out.println("('" + 5 + "','" + (char) ch + "')");
+					}else if ((char) ch == '#') {
+						Retract();
+						System.out.println("('" + 5 + "','" + (char) ch + "')");
+					}else if ((char) ch == ':') {
+						ch = br.read();
+						if(ch=='=') { //èµ‹å€¼
+							System.out.println("('" + 4 + "','" + ":=" + "')");
+						} else {
+							Retract();
+							System.out.println("('" + 4 + "','" + (char) ch + "')");
+							strToken.append(ch);
+						}
+					}
+
+				} else {
+					Retract();
+				}
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		WordCompiler compiler = new WordCompiler();
+		compiler.scanner();
+	}
 
 }
